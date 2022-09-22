@@ -1,21 +1,14 @@
 import { useEffect, useState } from "react";
+
 import { AssinarImage, CloseButton as Close } from "../../assets";
-import { CardNoticia } from "./CardNoticia";
 import { obterNoticias } from "./fakeRest";
 import { formatTime, formatTitulo } from "./formater";
+import { CardNoticia } from "./CardNoticia";
 import { Modal } from "./Modal";
 import { ModalPremium } from "./ModalPremium";
-import * as S from "./styled"
 
-export interface INoticiasNormalizadas {
-  id: number;
-  titulo: string;
-  description: string;
-  date: number | string;
-  premium: boolean;
-  image: string;
-  descriptionCurto?: string;
-}
+import { INoticiasNormalizadas } from "./types";
+import * as S from "./styled"
 
 const Noticias = () => {
   const [noticias, setNoticias] = useState<INoticiasNormalizadas[]>([]);
@@ -24,7 +17,7 @@ const Noticias = () => {
   const obterInformacoes = async () => {
     const resposta = await obterNoticias();
 
-    const data = resposta.map((noticia) => {   
+    const data = resposta.map((noticia) => {
 
       return {
         id: noticia.id,
@@ -50,28 +43,28 @@ const Noticias = () => {
       <S.ListaNoticias>
         {noticias.map((noticia) => (
           <CardNoticia
-          key={noticia.id} 
-          image={noticia.image}
-          titulo ={noticia.titulo}
-          date={noticia.date}
-          descriptionCurto={noticia.descriptionCurto}
-          setModal={() => setModal(noticia)}
-           />
+            key={noticia.id}
+            image={noticia.image}
+            titulo={noticia.titulo}
+            date={noticia.date}
+            descriptionCurto={noticia.descriptionCurto}
+            setModal={() => setModal(noticia)}
+          />
         ))}
         {modal ? (
           modal.premium ? (
-           <ModalPremium 
-           setModal={() => setModal(null)}
-           close={Close}
-           assinarImage={AssinarImage}           
-           />
+            <ModalPremium
+              setModal={() => setModal(null)}
+              close={Close}
+              assinarImage={AssinarImage}
+            />
           ) : (
-            <Modal 
-            setModal={() => setModal(null)}
-            close={Close}
-            image={modal.image}
-            titulo={modal.titulo}
-            description={modal.description}
+            <Modal
+              setModal={() => setModal(null)}
+              close={Close}
+              image={modal.image}
+              titulo={modal.titulo}
+              description={modal.description}
             />
           )
         ) : null}
