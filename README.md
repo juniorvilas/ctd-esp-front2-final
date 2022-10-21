@@ -1,6 +1,6 @@
 # ctd-esp-front2-final
 
-Examen Final de Frontend V
+Exame Final de Frontend V
 
 ## Indice
 
